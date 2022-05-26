@@ -60,7 +60,7 @@ class _TodoListPageState extends State<TodoListPage> {
     return Scaffold(
       appBar: AppBar(
         // アプリケーションバーに表示するタイトル
-        title: const Text('Todo Watcher'),
+        title: const Text('ToDo Watcher'),
       ),
       body: ListView.builder(
         // Todoの件数をリストの件数とする

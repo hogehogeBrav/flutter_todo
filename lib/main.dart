@@ -19,7 +19,7 @@ class TodoListApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       // アプリケーションのタイトル
-      title: 'Todo Watcher',
+      title: 'ToDo Watcher',
       // アプリケーションのテーマ
       theme: ThemeData(
         primarySwatch: Colors.blue,
