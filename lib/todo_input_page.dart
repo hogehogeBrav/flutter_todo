@@ -67,11 +67,6 @@ class _TodoInputPageState extends State<TodoInputPage> {
     _isCreateTodo = todo == null;
   }
 
-  String dateFormat(date) {
-    initializeDateFormatting('ja');
-    return DateFormat('納期：yyyy/MM/dd(E) HH:mm', "ja").format(date);
-  }
-
   /// 画面を作成する
   @override
   Widget build(BuildContext context) {
