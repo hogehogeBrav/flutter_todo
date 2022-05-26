@@ -111,7 +111,7 @@ class _TodoListPageState extends State<TodoListPage> {
                 // ID
                 leading: Text(item.id.toString()),
                 // タイトル
-                title: Text(item.title),
+                title: Text('${item.title}\n${item.finishDateTime}'),
                 // 完了か
                 trailing: Checkbox(
                   // チェックボックスの状態

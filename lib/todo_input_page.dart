@@ -41,7 +41,7 @@ class _TodoInputPageState extends State<TodoInputPage> {
   late String _detail;
 
   /// 画面項目：終了日時
-  late var _finishDateTime;
+  late String _finishDateTime;
 
   /// 画面項目：完了か
   late bool _done;
@@ -69,7 +69,7 @@ class _TodoInputPageState extends State<TodoInputPage> {
 
   String dateFormat(date) {
     initializeDateFormatting('ja');
-    return DateFormat('納期：yyyy/MM/dd(E) HH:mm', "ja").format(_finishDateTime);
+    return DateFormat('納期：yyyy/MM/dd(E) HH:mm', "ja").format(date);
   }
 
   /// 画面を作成する
@@ -137,27 +137,29 @@ class _TodoInputPageState extends State<TodoInputPage> {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {
-                  DatePicker.showDateTimePicker(context, showTitleActions: true,
-                      // onChanged内の処理はDatepickerの選択に応じて毎回呼び出される
-                      onChanged: (date) {
-                    // print('change $date');
+                  onPressed: () {
+                    DatePicker.showDateTimePicker(context,
+                        showTitleActions: true,
+                        // onChanged内の処理はDatepickerの選択に応じて毎回呼び出される
+                        onChanged: (date) {
+                      // print('change $date');
+                    },
+                        // onConfirm内の処理はDatepickerで選択完了後に呼び出される
+                        onConfirm: (date) {
+                      setState(() {
+                        initializeDateFormatting('ja');
+                        _finishDateTime =
+                            DateFormat('yyyy/MM/dd HH:mm', "ja").format(date);
+                      });
+                    },
+                        // Datepickerのデフォルトで表示する日時
+                        currentTime: DateTime.now(),
+                        // localによって色々な言語に対応
+                        locale: LocaleType.jp);
                   },
-                      // onConfirm内の処理はDatepickerで選択完了後に呼び出される
-                      onConfirm: (date) {
-                    setState(() {
-                      _finishDateTime = date;
-                    });
-                  },
-                      // Datepickerのデフォルトで表示する日時
-                      currentTime: DateTime.now(),
-                      // localによって色々な言語に対応
-                      locale: LocaleType.jp);
-                },
-                child: Text(_finishDateTime == ""
-                    ? '納期日時を選択'
-                    : dateFormat(_finishDateTime)),
-              ),
+                  child: Text(
+                    _finishDateTime == "" ? '納期日時を選択' : "納期：$_finishDateTime",
+                  )),
             ),
             const SizedBox(height: 20),
             // 追加/更新ボタン
@@ -167,10 +169,11 @@ class _TodoInputPageState extends State<TodoInputPage> {
                 onPressed: () {
                   if (_isCreateTodo) {
                     // Todoを追加する
-                    _store.add(_done, _title, _detail);
+                    _store.add(_done, _title, _detail, _finishDateTime);
                   } else {
                     // Todoを更新する
-                    _store.update(widget.todo!, _done, _title, _detail);
+                    _store.update(
+                        widget.todo!, _done, _title, _detail, _finishDateTime);
                   }
                   // Todoリスト画面に戻る
                   Navigator.of(context).pop();

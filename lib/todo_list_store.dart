@@ -46,22 +46,27 @@ class TodoListStore {
   }
 
   /// Todoを追加する
-  void add(bool done, String title, String detail) {
+  void add(bool done, String title, String detail, String finishDateTime) {
     var id = count() == 0 ? 1 : _list.last.id + 1;
     var dateTime = getDateTime();
-    var todo = Todo(id, title, detail, done, dateTime, dateTime);
+    var todo =
+        Todo(id, title, detail, finishDateTime, done, dateTime, dateTime);
     _list.add(todo);
     save();
   }
 
   /// Todoを更新する
-  void update(Todo todo, bool done, [String? title, String? detail]) {
+  void update(Todo todo, bool done,
+      [String? title, String? detail, String? finishDateTime]) {
     todo.done = done;
     if (title != null) {
       todo.title = title;
     }
     if (detail != null) {
       todo.detail = detail;
+    }
+    if (finishDateTime != null) {
+      todo.finishDateTime = finishDateTime;
     }
     todo.updateDate = getDateTime();
     save();

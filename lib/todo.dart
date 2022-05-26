@@ -12,6 +12,9 @@ class Todo {
   /// 詳細
   late String detail;
 
+  /// 納期
+  late String finishDateTime;
+
   /// 完了か
   late bool done;
 
@@ -21,13 +24,12 @@ class Todo {
   /// 更新日時
   late String updateDate;
 
-  var finishDateTime;
-
   /// コンストラクタ
   Todo(
     this.id,
     this.title,
     this.detail,
+    this.finishDateTime,
     this.done,
     this.createDate,
     this.updateDate,
@@ -39,6 +41,7 @@ class Todo {
       'id': id,
       'title': title,
       'detail': detail,
+      'finishDateTime': finishDateTime,
       'done': done,
       'createDate': createDate,
       'updateDate': updateDate
@@ -50,6 +53,7 @@ class Todo {
     id = json['id'];
     title = json['title'];
     detail = json['detail'];
+    finishDateTime = json['finishDateTime'];
     done = json['done'];
     createDate = json['createDate'];
     updateDate = json['updateDate'];
