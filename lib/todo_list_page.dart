@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
+import 'dart:async';
 import 'todo_input_page.dart';
 import 'todo_list_store.dart';
 import 'todo.dart';
@@ -48,12 +49,19 @@ class _TodoListPageState extends State<TodoListPage> {
   void initState() {
     super.initState();
 
+    ///0.5 Seconds
+    Timer.periodic(const Duration(seconds: 1), _onTimer);
+
     Future(
       () async {
         // ストアからTodoリストデータをロードし、画面を更新する
         setState(() => _store.load());
       },
     );
+  }
+
+  void _onTimer(Timer timer) {
+    setState(() {});
   }
 
   /// 画面を作成する
@@ -64,103 +72,104 @@ class _TodoListPageState extends State<TodoListPage> {
         // アプリケーションバーに表示するタイトル
         title: const Text('ToDo Watcher'),
       ),
-      body: ListView.builder(
-        // Todoの件数をリストの件数とする
-        itemCount: _store.count(),
-        itemBuilder: (context, index) {
-          // インデックスに対応するTodoを取得する
-          var item = _store.findByIndex(index);
-          return Slidable(
-            // 右方向にリストアイテムをスライドした場合のアクション
-            startActionPane: ActionPane(
-              motion: const ScrollMotion(),
-              extentRatio: 0.25,
-              children: [
-                SlidableAction(
-                  onPressed: (context) {
-                    // Todo編集画面に遷移する
-                    _pushTodoInputPage(item);
-                  },
-                  backgroundColor: Colors.yellow,
-                  icon: Icons.edit,
-                  label: '編集',
-                ),
-              ],
-            ),
-            // 左方向にリストアイテムをスライドした場合のアクション
-            endActionPane: ActionPane(
-              motion: const ScrollMotion(),
-              extentRatio: 0.25,
-              children: [
-                SlidableAction(
-                  onPressed: (context) {
-                    // Todoを削除し、画面を更新する
-                    setState(() => {_store.delete(item)});
-                  },
-                  backgroundColor: Colors.red,
-                  icon: Icons.edit,
-                  label: '削除',
-                ),
-              ],
-            ),
-            child: Container(
-              height: 90,
-              padding: EdgeInsets.fromLTRB(0, 5, 0, 13),
-              decoration: const BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(color: Colors.grey),
-                ),
-              ),
-              child: ListTile(
-                // ID
-                leading: Text(item.id.toString()),
-                // タイトル
-
-                // title: Text(deadLineCalc(item.createDate, item.finishDateTime)),
-
-                // title: Text('${item.title}\n${item.finishDateTime}'),
-
-                title: Stack(
-                    alignment: AlignmentDirectional.bottomCenter,
-                    children: [
-                      Container(
-                        alignment: Alignment.topCenter,
-                        child: Text('${item.title}\n${item.finishDateTime}'),
-                      ),
-                      // プログレスバー
-                      SizedBox(
-                          child: LinearProgressIndicator(
-                        minHeight: 22.0,
-                        backgroundColor: Colors.blue,
-                        valueColor: const AlwaysStoppedAnimation<Color>(
-                            Colors.lightBlueAccent),
-                        value: double.parse(
-                            deadLineCalc(item.createDate, item.finishDateTime)),
-                      )),
-                      // 進捗率の文字
-                      Align(
-                          alignment: Alignment.bottomCenter,
-                          child: Text(
-                              progressMsg(double.parse(deadLineCalc(
-                                  item.createDate, item.finishDateTime))),
-                              style: const TextStyle(
-                                  fontSize: 15, color: Colors.white))),
-                    ]),
-
-                // 完了か
-                trailing: Checkbox(
-                  // チェックボックスの状態
-                  value: item.done,
-                  onChanged: (bool? value) {
-                    // Todo(完了か)を更新し、画面を更新する
-                    setState(() => _store.update(item, value!));
-                  },
-                ),
-              ),
-            ),
-          );
+      body: RefreshIndicator(
+        onRefresh: () async {
+          setState(() {});
         },
+        child: ListView.builder(
+          // Todoの件数をリストの件数とする
+          itemCount: _store.count(),
+          itemBuilder: (context, index) {
+            // インデックスに対応するTodoを取得する
+            var item = _store.findByIndex(index);
+            return Slidable(
+              // 右方向にリストアイテムをスライドした場合のアクション
+              startActionPane: ActionPane(
+                motion: const ScrollMotion(),
+                extentRatio: 0.25,
+                children: [
+                  SlidableAction(
+                    onPressed: (context) {
+                      // Todo編集画面に遷移する
+                      _pushTodoInputPage(item);
+                    },
+                    backgroundColor: Colors.yellow,
+                    icon: Icons.edit,
+                    label: '編集',
+                  ),
+                ],
+              ),
+              // 左方向にリストアイテムをスライドした場合のアクション
+              endActionPane: ActionPane(
+                motion: const ScrollMotion(),
+                extentRatio: 0.25,
+                children: [
+                  SlidableAction(
+                    onPressed: (context) {
+                      // Todoを削除し、画面を更新する
+                      setState(() => {_store.delete(item)});
+                    },
+                    backgroundColor: Colors.red,
+                    icon: Icons.edit,
+                    label: '削除',
+                  ),
+                ],
+              ),
+              child: Container(
+                height: 90,
+                padding: const EdgeInsets.fromLTRB(0, 5, 0, 13),
+                decoration: const BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(color: Colors.grey),
+                  ),
+                ),
+                child: ListTile(
+                  // ID
+                  leading: Text(item.id.toString()),
+                  // タイトル
+                  title: Stack(
+                      alignment: AlignmentDirectional.bottomCenter,
+                      children: [
+                        Container(
+                          alignment: Alignment.topCenter,
+                          child: Text('${item.title}\n${item.finishDateTime}'),
+                        ),
+                        // プログレスバー
+                        SizedBox(
+                            child: LinearProgressIndicator(
+                          minHeight: 22.0,
+                          backgroundColor: Colors.blue,
+                          valueColor: const AlwaysStoppedAnimation<Color>(
+                              Colors.lightBlueAccent),
+                          value: double.parse(deadLineCalc(
+                              item.createDate, item.finishDateTime)),
+                        )),
+                        // 進捗率の文字
+                        Align(
+                            alignment: Alignment.bottomCenter,
+                            child: Text(
+                                progressMsg(double.parse(deadLineCalc(
+                                    item.createDate, item.finishDateTime))),
+                                style: const TextStyle(
+                                    fontSize: 15, color: Colors.white))),
+                      ]),
+
+                  // 完了か
+                  trailing: Checkbox(
+                    // チェックボックスの状態
+                    value: item.done,
+                    onChanged: (bool? value) {
+                      // Todo(完了か)を更新し、画面を更新する
+                      setState(() => _store.update(item, value!));
+                    },
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
       ),
+
       // Todo追加画面に遷移するボタン
       floatingActionButton: FloatingActionButton(
         // Todo追加画面に遷移する
