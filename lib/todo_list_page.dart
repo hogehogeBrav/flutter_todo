@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 import 'todo_input_page.dart';
 import 'todo_list_store.dart';
 import 'todo.dart';
@@ -102,6 +104,8 @@ class _TodoListPageState extends State<TodoListPage> {
               ],
             ),
             child: Container(
+              height: 90,
+              padding: EdgeInsets.fromLTRB(0, 5, 0, 13),
               decoration: const BoxDecoration(
                 border: Border(
                   bottom: BorderSide(color: Colors.grey),
@@ -111,7 +115,38 @@ class _TodoListPageState extends State<TodoListPage> {
                 // ID
                 leading: Text(item.id.toString()),
                 // タイトル
-                title: Text('${item.title}\n${item.finishDateTime}'),
+
+                // title: Text(deadLineCalc(item.createDate, item.finishDateTime)),
+
+                // title: Text('${item.title}\n${item.finishDateTime}'),
+
+                title: Stack(
+                    alignment: AlignmentDirectional.bottomCenter,
+                    children: [
+                      Container(
+                        alignment: Alignment.topCenter,
+                        child: Text('${item.title}\n${item.finishDateTime}'),
+                      ),
+                      // プログレスバー
+                      SizedBox(
+                          child: LinearProgressIndicator(
+                        minHeight: 25.0,
+                        backgroundColor: Colors.blue,
+                        valueColor: const AlwaysStoppedAnimation<Color>(
+                            Colors.lightBlueAccent),
+                        value: double.parse(
+                            deadLineCalc(item.createDate, item.finishDateTime)),
+                      )),
+                      // 進捗率の文字
+                      Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Text(
+                              progressMsg(double.parse(deadLineCalc(
+                                  item.createDate, item.finishDateTime))),
+                              style: const TextStyle(
+                                  fontSize: 18, color: Colors.white))),
+                    ]),
+
                 // 完了か
                 trailing: Checkbox(
                   // チェックボックスの状態
@@ -134,4 +169,41 @@ class _TodoListPageState extends State<TodoListPage> {
       ),
     );
   }
+}
+
+/// "yyyy/MM/dd HH:mm"形式で日時を取得する
+String getDateTime() {
+  var format = DateFormat("yyyy-MM-dd HH:mm:ss");
+  var dateTime = format.format(DateTime.now());
+  return dateTime;
+}
+
+String deadLineCalc(String createDate, String finishDateTime) {
+  var nowTime = DateTime.now();
+  var startTime = DateTime.parse(createDate);
+  DateTime endTime = DateTime.parse(finishDateTime);
+  var parentTime = endTime.difference(startTime).inSeconds;
+  var childTime = nowTime.difference(startTime).inSeconds;
+  var result = (childTime / parentTime);
+  // return _printDuration(parentTime);
+  if (result >= 1.0) {
+    result = 1.0;
+  }
+  return result.toString();
+}
+
+String progressMsg(double value) {
+  if (value >= 1.0) {
+    return "納期になりました！";
+  } else {
+    var _result = (value * 100).toStringAsFixed(2);
+    return "$_result%";
+  }
+}
+
+String _printDuration(Duration duration) {
+  String twoDigits(int n) => n.toString().padLeft(2, "0");
+  String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+  String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+  return "${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds";
 }
