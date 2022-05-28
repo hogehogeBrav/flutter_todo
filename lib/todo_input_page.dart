@@ -144,7 +144,8 @@ class _TodoInputPageState extends State<TodoInputPage> {
                       setState(() {
                         initializeDateFormatting('ja');
                         _finishDateTime =
-                            DateFormat('yyyy/MM/dd HH:mm', "ja").format(date);
+                            DateFormat('yyyy-MM-dd HH:mm:ss', "ja")
+                                .format(date);
                       });
                     },
                         // Datepickerのデフォルトで表示する日時
