@@ -130,7 +130,7 @@ class _TodoListPageState extends State<TodoListPage> {
                       // プログレスバー
                       SizedBox(
                           child: LinearProgressIndicator(
-                        minHeight: 25.0,
+                        minHeight: 22.0,
                         backgroundColor: Colors.blue,
                         valueColor: const AlwaysStoppedAnimation<Color>(
                             Colors.lightBlueAccent),
@@ -144,7 +144,7 @@ class _TodoListPageState extends State<TodoListPage> {
                               progressMsg(double.parse(deadLineCalc(
                                   item.createDate, item.finishDateTime))),
                               style: const TextStyle(
-                                  fontSize: 18, color: Colors.white))),
+                                  fontSize: 15, color: Colors.white))),
                     ]),
 
                 // 完了か
@@ -196,8 +196,8 @@ String progressMsg(double value) {
   if (value >= 1.0) {
     return "納期になりました！";
   } else {
-    var _result = (value * 100).toStringAsFixed(2);
-    return "$_result%";
+    var result = (value * 100).toStringAsFixed(2);
+    return "現在 $result%";
   }
 }
 
