@@ -131,8 +131,9 @@ class _TodoListPageState extends State<TodoListPage> {
                       alignment: AlignmentDirectional.bottomCenter,
                       children: [
                         Container(
-                          alignment: Alignment.topCenter,
-                          child: Text('${item.title}\n${item.finishDateTime}'),
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                              '${item.title}\n${viewDate(item.finishDateTime)}'),
                         ),
                         // プログレスバー
                         SizedBox(
@@ -153,7 +154,6 @@ class _TodoListPageState extends State<TodoListPage> {
                                 style: const TextStyle(
                                     fontSize: 15, color: Colors.white))),
                       ]),
-
                   // 完了か
                   trailing: Checkbox(
                     // チェックボックスの状態
@@ -208,6 +208,13 @@ String progressMsg(double value) {
     var result = (value * 100).toStringAsFixed(2);
     return "現在 $result%";
   }
+}
+
+String viewDate(String finishDateTime) {
+  DateTime endTime = DateTime.parse(finishDateTime);
+  var format = DateFormat("納期：yyyy年MM月dd日 HH:mm");
+  var dateTime = format.format(endTime);
+  return dateTime;
 }
 
 String _printDuration(Duration duration) {
