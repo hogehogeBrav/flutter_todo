@@ -204,6 +204,8 @@ String deadLineCalc(String createDate, String finishDateTime) {
 String progressMsg(double value) {
   if (value >= 1.0) {
     return "納期になりました！";
+  } else if (value <= 0) {
+    return "既に納期が過ぎています！";
   } else {
     var result = (value * 100).toStringAsFixed(2);
     return "現在 $result%";
