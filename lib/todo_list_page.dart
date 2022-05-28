@@ -83,89 +83,93 @@ class _TodoListPageState extends State<TodoListPage> {
             // インデックスに対応するTodoを取得する
             var item = _store.findByIndex(index);
             return Slidable(
-              // 右方向にリストアイテムをスライドした場合のアクション
-              startActionPane: ActionPane(
-                motion: const ScrollMotion(),
-                extentRatio: 0.25,
-                children: [
-                  SlidableAction(
-                    onPressed: (context) {
-                      // Todo編集画面に遷移する
-                      _pushTodoInputPage(item);
-                    },
-                    backgroundColor: Colors.yellow,
-                    icon: Icons.edit,
-                    label: '編集',
-                  ),
-                ],
-              ),
-              // 左方向にリストアイテムをスライドした場合のアクション
-              endActionPane: ActionPane(
-                motion: const ScrollMotion(),
-                extentRatio: 0.25,
-                children: [
-                  SlidableAction(
-                    onPressed: (context) {
-                      // Todoを削除し、画面を更新する
-                      setState(() => {_store.delete(item)});
-                    },
-                    backgroundColor: Colors.red,
-                    icon: Icons.edit,
-                    label: '削除',
-                  ),
-                ],
-              ),
-              child: Container(
-                height: 90,
-                padding: const EdgeInsets.fromLTRB(0, 5, 0, 13),
-                decoration: const BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(color: Colors.grey),
-                  ),
+                // 右方向にリストアイテムをスライドした場合のアクション
+                startActionPane: ActionPane(
+                  motion: const ScrollMotion(),
+                  extentRatio: 0.25,
+                  children: [
+                    SlidableAction(
+                      onPressed: (context) {
+                        // Todo編集画面に遷移する
+                        _pushTodoInputPage(item);
+                      },
+                      backgroundColor: Colors.yellow,
+                      icon: Icons.edit,
+                      label: '編集',
+                    ),
+                  ],
                 ),
-                child: ListTile(
-                  // ID
-                  leading: Text(item.id.toString()),
-                  // タイトル
-                  title: Stack(
-                      alignment: AlignmentDirectional.bottomCenter,
-                      children: [
-                        Container(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                              '${item.title}\n${viewDate(item.finishDateTime)}'),
-                        ),
-                        // プログレスバー
-                        SizedBox(
-                            child: LinearProgressIndicator(
-                          minHeight: 22.0,
-                          backgroundColor: Colors.blue,
-                          valueColor: const AlwaysStoppedAnimation<Color>(
-                              Colors.lightBlueAccent),
-                          value: double.parse(deadLineCalc(
-                              item.createDate, item.finishDateTime)),
-                        )),
-                        // 進捗率の文字
-                        Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Text(
-                                progressMsg(double.parse(deadLineCalc(
-                                    item.createDate, item.finishDateTime))),
-                                style: const TextStyle(
-                                    fontSize: 15, color: Colors.white))),
-                      ]),
-                  // 完了か
-                  trailing: Checkbox(
-                    // チェックボックスの状態
-                    value: item.done,
-                    onChanged: (bool? value) {
-                      // Todo(完了か)を更新し、画面を更新する
-                      setState(() => _store.update(item, value!));
-                    },
-                  ),
+                // 左方向にリストアイテムをスライドした場合のアクション
+                endActionPane: ActionPane(
+                  motion: const ScrollMotion(),
+                  extentRatio: 0.25,
+                  children: [
+                    SlidableAction(
+                      onPressed: (context) {
+                        // Todoを削除し、画面を更新する
+                        setState(() => {_store.delete(item)});
+                      },
+                      backgroundColor: Colors.red,
+                      icon: Icons.edit,
+                      label: '削除',
+                    ),
+                  ],
                 ),
-              ),
-            );
+                child: GestureDetector(
+                  onTap: () {
+                    _pushTodoInputPage(item);
+                  },
+                  child: Container(
+                    height: 90,
+                    padding: const EdgeInsets.fromLTRB(0, 5, 0, 13),
+                    decoration: const BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(color: Colors.grey),
+                      ),
+                    ),
+                    child: ListTile(
+                      // ID
+                      leading: Text(item.id.toString()),
+                      // タイトル
+                      title: Stack(
+                          alignment: AlignmentDirectional.bottomCenter,
+                          children: [
+                            Container(
+                              alignment: Alignment.topLeft,
+                              child: Text(
+                                  '${item.title}\n${viewDate(item.finishDateTime)}'),
+                            ),
+                            // プログレスバー
+                            SizedBox(
+                                child: LinearProgressIndicator(
+                              minHeight: 22.0,
+                              backgroundColor: Colors.blue,
+                              valueColor: const AlwaysStoppedAnimation<Color>(
+                                  Colors.lightBlueAccent),
+                              value: double.parse(deadLineCalc(
+                                  item.createDate, item.finishDateTime)),
+                            )),
+                            // 進捗率の文字
+                            Align(
+                                alignment: Alignment.bottomCenter,
+                                child: Text(
+                                    progressMsg(double.parse(deadLineCalc(
+                                        item.createDate, item.finishDateTime))),
+                                    style: const TextStyle(
+                                        fontSize: 15, color: Colors.white))),
+                          ]),
+                      // 完了か
+                      trailing: Checkbox(
+                        // チェックボックスの状態
+                        value: item.done,
+                        onChanged: (bool? value) {
+                          // Todo(完了か)を更新し、画面を更新する
+                          setState(() => _store.update(item, value!));
+                        },
+                      ),
+                    ),
+                  ),
+                ));
           },
         ),
       ),
