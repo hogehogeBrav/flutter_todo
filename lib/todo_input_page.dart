@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
+import 'package:todo_test/todo_list_page.dart';
 import 'todo_list_store.dart';
 import 'todo.dart';
 
@@ -60,7 +61,7 @@ class _TodoInputPageState extends State<TodoInputPage> {
 
     _title = todo?.title ?? "";
     _detail = todo?.detail ?? "";
-    _finishDateTime = todo?.finishDateTime ?? "";
+    _finishDateTime = todo?.finishDateTime ?? DateTime.now().toString();
     _done = todo?.done ?? false;
     _createDate = todo?.createDate ?? "";
     _updateDate = todo?.updateDate ?? "";
@@ -154,9 +155,7 @@ class _TodoInputPageState extends State<TodoInputPage> {
                         locale: LocaleType.jp);
                   },
                   child: Text(
-                    _finishDateTime == ""
-                        ? '納期日時を選択'
-                        : "納期：${viewDate(_finishDateTime)}",
+                    "納期設定：${viewDate(_finishDateTime)}",
                   )),
             ),
             const SizedBox(height: 20),
