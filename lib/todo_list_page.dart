@@ -94,7 +94,7 @@ class _TodoListPageState extends State<TodoListPage> {
                         _pushTodoInputPage(item);
                       },
                       backgroundColor: Colors.yellow,
-                      icon: Icons.edit,
+                      icon: Icons.edit_note_rounded,
                       label: '編集',
                     ),
                   ],
@@ -110,7 +110,7 @@ class _TodoListPageState extends State<TodoListPage> {
                         setState(() => {_store.delete(item)});
                       },
                       backgroundColor: Colors.red,
-                      icon: Icons.edit,
+                      icon: Icons.delete_outline_rounded,
                       label: '削除',
                     ),
                   ],
