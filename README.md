@@ -9,5 +9,8 @@ flutter練習がてらにToDoアプリ作りたいだけのrepo
   <img src="https://user-images.githubusercontent.com/78929673/170543491-3c6e79da-4735-47e9-acd5-6cf69e3f4abb.png" width=230px>
 </div>
 
-## 5/28
-<img src="https://user-images.githubusercontent.com/78929673/170833004-6d18dddb-9cc2-4fa5-bcc0-33db2eed8a66.png" width=230px>
+## 5/28 ~ 5/29
+<div display=flex>
+  <img src="https://user-images.githubusercontent.com/78929673/170833004-6d18dddb-9cc2-4fa5-bcc0-33db2eed8a66.png" width=230px>
+  <img src="https://user-images.githubusercontent.com/78929673/170873329-c2359ee5-d94d-49fc-945b-cf61172d22cc.png" width=230px>
+ </div>
