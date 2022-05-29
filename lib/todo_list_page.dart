@@ -120,7 +120,7 @@ class _TodoListPageState extends State<TodoListPage> {
                     _pushTodoInputPage(item);
                   },
                   child: Container(
-                    height: 90,
+                    height: 105,
                     padding: const EdgeInsets.fromLTRB(0, 5, 0, 13),
                     decoration: const BoxDecoration(
                       border: Border(
@@ -136,14 +136,21 @@ class _TodoListPageState extends State<TodoListPage> {
                           children: [
                             Container(
                               alignment: Alignment.topLeft,
-                              child: Text(
-                                  '${item.title}\n${viewDate(item.finishDateTime)}'),
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text("・${itemTitle(item.title)}"),
+                                    Text("開始：${viewDate(item.createDate)}",
+                                        style: TextStyle(fontSize: 12)),
+                                    Text("納期：${viewDate(item.finishDateTime)}",
+                                        style: TextStyle(fontSize: 12)),
+                                  ]),
                             ),
                             // プログレスバー
                             SizedBox(
                                 child: LinearProgressIndicator(
                               minHeight: 22.0,
-                              backgroundColor: Colors.blue,
+                              backgroundColor: Colors.grey,
                               valueColor: const AlwaysStoppedAnimation<Color>(
                                   Colors.lightBlueAccent),
                               value: double.parse(deadLineCalc(
@@ -216,9 +223,17 @@ String progressMsg(double value) {
   }
 }
 
+String itemTitle(String title) {
+  if (title == "") {
+    return "no title";
+  } else {
+    return title;
+  }
+}
+
 String viewDate(String finishDateTime) {
   DateTime endTime = DateTime.parse(finishDateTime);
-  var format = DateFormat("納期：yyyy年MM月dd日 HH:mm");
+  var format = DateFormat("yyyy年MM月dd日 HH:mm");
   var dateTime = format.format(endTime);
   return dateTime;
 }
