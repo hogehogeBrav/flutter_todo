@@ -154,62 +154,86 @@ class _TodoInputPageState extends State<TodoInputPage> {
                         locale: LocaleType.jp);
                   },
                   child: Text(
-                    _finishDateTime == "" ? '納期日時を選択' : "納期：$_finishDateTime",
+                    _finishDateTime == ""
+                        ? '納期日時を選択'
+                        : "納期：${viewDate(_finishDateTime)}",
                   )),
             ),
             const SizedBox(height: 20),
             // 追加/更新ボタン
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  if (_isCreateTodo) {
-                    // Todoを追加する
-                    _store.add(_done, _title, _detail, _finishDateTime);
-                  } else {
-                    // Todoを更新する
-                    _store.update(
-                        widget.todo!, _done, _title, _detail, _finishDateTime);
-                  }
-                  // Todoリスト画面に戻る
-                  Navigator.of(context).pop();
-                },
-                child: Text(
-                  _isCreateTodo ? '追加' : '更新',
-                  style: const TextStyle(color: Colors.white),
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
-            // キャンセルボタン
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  // Todoリスト画面に戻る
-                  Navigator.of(context).pop();
-                },
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.white,
-                  side: const BorderSide(
-                    color: Colors.blue,
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child:
+                      // キャンセルボタン
+                      SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Todoリスト画面に戻る
+                        Navigator.of(context).pop();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.white,
+                        side: const BorderSide(
+                          color: Colors.blue,
+                        ),
+                      ),
+                      child: const Text(
+                        "キャンセル",
+                        style: TextStyle(color: Colors.blue),
+                      ),
+                    ),
                   ),
                 ),
-                child: const Text(
-                  "キャンセル",
-                  style: TextStyle(color: Colors.blue),
+                const SizedBox(
+                  width: 30,
                 ),
-              ),
+                Expanded(
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        if (_isCreateTodo) {
+                          // Todoを追加する
+                          _store.add(_done, _title, _detail, _finishDateTime);
+                        } else {
+                          // Todoを更新する
+                          _store.update(widget.todo!, _done, _title, _detail,
+                              _finishDateTime);
+                        }
+                        // Todoリスト画面に戻る
+                        Navigator.of(context).pop();
+                      },
+                      child: Text(
+                        _isCreateTodo ? '追加' : '更新',
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 30),
+            const SizedBox(
+              height: 13,
+            ),
             // 作成日時のテキストラベル
             Visibility(
               visible: !_isCreateTodo,
-              child: Text("作成日時 : $_createDate\n更新日時 : $_updateDate"),
+              child: Text(
+                  "作成日時 : ${viewDate(_createDate)}\n更新日時 : ${viewDate(_updateDate)}"),
             ),
           ],
         ),
       ),
     );
   }
+}
+
+/// 表示する日時のフォーマット
+String viewDate(String finishDateTime) {
+  DateTime endTime = DateTime.parse(finishDateTime);
+  var format = DateFormat("yyyy年MM月dd日 HH:mm");
+  var dateTime = format.format(endTime);
+  return dateTime;
 }

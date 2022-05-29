@@ -93,8 +93,8 @@ class _TodoListPageState extends State<TodoListPage> {
                         // Todo編集画面に遷移する
                         _pushTodoInputPage(item);
                       },
-                      backgroundColor: Colors.yellow,
-                      icon: Icons.edit,
+                      backgroundColor: Colors.blueAccent,
+                      icon: Icons.edit_note_rounded,
                       label: '編集',
                     ),
                   ],
@@ -110,7 +110,7 @@ class _TodoListPageState extends State<TodoListPage> {
                         setState(() => {_store.delete(item)});
                       },
                       backgroundColor: Colors.red,
-                      icon: Icons.edit,
+                      icon: Icons.delete_outline_rounded,
                       label: '削除',
                     ),
                   ],
@@ -152,22 +152,29 @@ class _TodoListPageState extends State<TodoListPage> {
                             ),
                             // プログレスバー
                             SizedBox(
-                                child: LinearProgressIndicator(
-                              minHeight: 22.0,
-                              backgroundColor: Colors.grey,
-                              valueColor: const AlwaysStoppedAnimation<Color>(
-                                  Colors.lightBlueAccent),
-                              value: double.parse(deadLineCalc(
-                                  item.createDate, item.finishDateTime)),
-                            )),
+                              child: ClipRRect(
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(8)),
+                                  child: LinearProgressIndicator(
+                                    minHeight: 22.0,
+                                    backgroundColor: Colors.grey,
+                                    valueColor:
+                                        const AlwaysStoppedAnimation<Color>(
+                                            Colors.lightBlueAccent),
+                                    value: double.parse(deadLineCalc(
+                                        item.createDate, item.finishDateTime)),
+                                  )),
+                            ),
                             // 進捗率の文字
                             Align(
                                 alignment: Alignment.bottomCenter,
                                 child: Text(
-                                    progressMsg(double.parse(deadLineCalc(
-                                        item.createDate, item.finishDateTime))),
-                                    style: const TextStyle(
-                                        fontSize: 15, color: Colors.white))),
+                                  progressMsg(double.parse(deadLineCalc(
+                                      item.createDate, item.finishDateTime))),
+                                  style: const TextStyle(shadows: <Shadow>[
+                                    Shadow(blurRadius: 1.5)
+                                  ], fontSize: 15, color: Colors.white),
+                                )),
                           ]),
                       // 完了か
                       trailing: Checkbox(
@@ -216,6 +223,7 @@ String deadLineCalc(String createDate, String finishDateTime) {
   return result.toString();
 }
 
+/// プログレスバーテキスト
 String progressMsg(double value) {
   if (value >= 1.0) {
     return "納期になりました！";
@@ -227,6 +235,7 @@ String progressMsg(double value) {
   }
 }
 
+/// タイトルが未設定場合のテキスト
 String itemTitle(String title) {
   if (title == "") {
     return "no title";
@@ -235,6 +244,7 @@ String itemTitle(String title) {
   }
 }
 
+/// 表示する日時のフォーマット
 String viewDate(String finishDateTime) {
   DateTime endTime = DateTime.parse(finishDateTime);
   var format = DateFormat("yyyy年MM月dd日 HH:mm");
