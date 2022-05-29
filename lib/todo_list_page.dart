@@ -165,10 +165,12 @@ class _TodoListPageState extends State<TodoListPage> {
                             Align(
                                 alignment: Alignment.bottomCenter,
                                 child: Text(
-                                    progressMsg(double.parse(deadLineCalc(
-                                        item.createDate, item.finishDateTime))),
-                                    style: const TextStyle(
-                                        fontSize: 15, color: Colors.white))),
+                                  progressMsg(double.parse(deadLineCalc(
+                                      item.createDate, item.finishDateTime))),
+                                  style: const TextStyle(shadows: <Shadow>[
+                                    Shadow(blurRadius: 1.5)
+                                  ], fontSize: 15, color: Colors.white),
+                                )),
                           ]),
                       // 完了か
                       trailing: Checkbox(
