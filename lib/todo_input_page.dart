@@ -149,7 +149,7 @@ class _TodoInputPageState extends State<TodoInputPage> {
                       });
                     },
                         // Datepickerのデフォルトで表示する日時
-                        currentTime: DateTime.now(),
+                        currentTime: DateTime.parse(_finishDateTime),
                         // localによって色々な言語に対応
                         locale: LocaleType.jp);
                   },
