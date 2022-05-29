@@ -40,7 +40,7 @@ class TodoListStore {
 
   /// "yyyy/MM/dd HH:mm"形式で日時を取得する
   String getDateTime() {
-    var format = DateFormat("yyyy-MM-dd HH:mm:ss");
+    var format = DateFormat("yyyy-MM-dd HH:mm");
     var dateTime = format.format(DateTime.now());
     return dateTime;
   }

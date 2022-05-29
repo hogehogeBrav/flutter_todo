@@ -210,6 +210,9 @@ String getDateTime() {
 }
 
 String deadLineCalc(String createDate, String finishDateTime) {
+  if (createDate == finishDateTime) {
+    return 0.toString();
+  }
   var nowTime = DateTime.now();
   var startTime = DateTime.parse(createDate);
   DateTime endTime = DateTime.parse(finishDateTime);
@@ -258,3 +261,4 @@ String viewDate(String finishDateTime) {
 //   String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
 //   return "${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds";
 // }
+
