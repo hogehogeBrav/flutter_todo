@@ -220,8 +220,9 @@ class _TodoInputPageState extends State<TodoInputPage> {
             // 作成日時のテキストラベル
             Visibility(
               visible: !_isCreateTodo,
-              child: Text(
-                  "作成日時 : ${viewDate(_createDate)}\n更新日時 : ${viewDate(_updateDate)}"),
+              child: Text(!_isCreateTodo
+                  ? "作成日時 : ${viewDate(_createDate)}\n更新日時 : ${viewDate(_updateDate)}"
+                  : "作成日時 : $_createDate\n更新日時 : $_updateDate"),
             ),
           ],
         ),
