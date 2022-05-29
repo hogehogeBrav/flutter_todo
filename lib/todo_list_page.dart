@@ -121,15 +121,19 @@ class _TodoListPageState extends State<TodoListPage> {
                   },
                   child: Container(
                     height: 105,
-                    padding: const EdgeInsets.fromLTRB(0, 5, 0, 13),
-                    decoration: const BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(color: Colors.grey),
-                      ),
-                    ),
+                    padding: const EdgeInsets.fromLTRB(0, 2, 0, 13),
+                    decoration: BoxDecoration(
+                        border: const Border(
+                          bottom: BorderSide(
+                              color: Color.fromARGB(255, 200, 200, 200)),
+                        ),
+                        color: (item.id % 2 == 1)
+                            ? Colors.white
+                            : Color.fromARGB(255, 239, 239, 239)),
                     child: ListTile(
                       // ID
-                      leading: Text(item.id.toString()),
+                      leading: Text("${item.id.toString()}.",
+                          style: TextStyle(fontSize: 18)),
                       // タイトル
                       title: Stack(
                           alignment: AlignmentDirectional.bottomCenter,
@@ -215,10 +219,10 @@ String deadLineCalc(String createDate, String finishDateTime) {
 String progressMsg(double value) {
   if (value >= 1.0) {
     return "納期になりました！";
-  } else if (value <= 0) {
+  } else if (value < 0) {
     return "既に納期が過ぎています！";
   } else {
-    var result = (value * 100).toStringAsFixed(2);
+    var result = (value * 100).toStringAsFixed(3);
     return "現在 $result%";
   }
 }
