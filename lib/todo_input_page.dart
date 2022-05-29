@@ -159,49 +159,59 @@ class _TodoInputPageState extends State<TodoInputPage> {
             ),
             const SizedBox(height: 20),
             // 追加/更新ボタン
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  if (_isCreateTodo) {
-                    // Todoを追加する
-                    _store.add(_done, _title, _detail, _finishDateTime);
-                  } else {
-                    // Todoを更新する
-                    _store.update(
-                        widget.todo!, _done, _title, _detail, _finishDateTime);
-                  }
-                  // Todoリスト画面に戻る
-                  Navigator.of(context).pop();
-                },
-                child: Text(
-                  _isCreateTodo ? '追加' : '更新',
-                  style: const TextStyle(color: Colors.white),
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
-            // キャンセルボタン
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  // Todoリスト画面に戻る
-                  Navigator.of(context).pop();
-                },
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.white,
-                  side: const BorderSide(
-                    color: Colors.blue,
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child:
+                      // キャンセルボタン
+                      SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Todoリスト画面に戻る
+                        Navigator.of(context).pop();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.white,
+                        side: const BorderSide(
+                          color: Colors.blue,
+                        ),
+                      ),
+                      child: const Text(
+                        "キャンセル",
+                        style: TextStyle(color: Colors.blue),
+                      ),
+                    ),
                   ),
                 ),
-                child: const Text(
-                  "キャンセル",
-                  style: TextStyle(color: Colors.blue),
+                const SizedBox(
+                  width: 30,
                 ),
-              ),
+                Expanded(
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        if (_isCreateTodo) {
+                          // Todoを追加する
+                          _store.add(_done, _title, _detail, _finishDateTime);
+                        } else {
+                          // Todoを更新する
+                          _store.update(widget.todo!, _done, _title, _detail,
+                              _finishDateTime);
+                        }
+                        // Todoリスト画面に戻る
+                        Navigator.of(context).pop();
+                      },
+                      child: Text(
+                        _isCreateTodo ? '追加' : '更新',
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 30),
             // 作成日時のテキストラベル
             Visibility(
               visible: !_isCreateTodo,
