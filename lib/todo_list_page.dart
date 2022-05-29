@@ -93,7 +93,7 @@ class _TodoListPageState extends State<TodoListPage> {
                         // Todo編集画面に遷移する
                         _pushTodoInputPage(item);
                       },
-                      backgroundColor: Colors.yellow,
+                      backgroundColor: Colors.blueAccent,
                       icon: Icons.edit_note_rounded,
                       label: '編集',
                     ),
