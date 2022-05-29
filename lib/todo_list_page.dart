@@ -219,6 +219,7 @@ String deadLineCalc(String createDate, String finishDateTime) {
   return result.toString();
 }
 
+/// プログレスバーテキスト
 String progressMsg(double value) {
   if (value >= 1.0) {
     return "納期になりました！";
@@ -230,6 +231,7 @@ String progressMsg(double value) {
   }
 }
 
+/// タイトルが未設定場合のテキスト
 String itemTitle(String title) {
   if (title == "") {
     return "no title";
@@ -238,6 +240,7 @@ String itemTitle(String title) {
   }
 }
 
+/// 表示する日時のフォーマット
 String viewDate(String finishDateTime) {
   DateTime endTime = DateTime.parse(finishDateTime);
   var format = DateFormat("yyyy年MM月dd日 HH:mm");

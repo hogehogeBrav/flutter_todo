@@ -154,7 +154,9 @@ class _TodoInputPageState extends State<TodoInputPage> {
                         locale: LocaleType.jp);
                   },
                   child: Text(
-                    _finishDateTime == "" ? '納期日時を選択' : "納期：$_finishDateTime",
+                    _finishDateTime == ""
+                        ? '納期日時を選択'
+                        : "納期：${viewDate(_finishDateTime)}",
                   )),
             ),
             const SizedBox(height: 20),
@@ -218,11 +220,20 @@ class _TodoInputPageState extends State<TodoInputPage> {
             // 作成日時のテキストラベル
             Visibility(
               visible: !_isCreateTodo,
-              child: Text("作成日時 : $_createDate\n更新日時 : $_updateDate"),
+              child: Text(
+                  "作成日時 : ${viewDate(_createDate)}\n更新日時 : ${viewDate(_updateDate)}"),
             ),
           ],
         ),
       ),
     );
   }
+}
+
+/// 表示する日時のフォーマット
+String viewDate(String finishDateTime) {
+  DateTime endTime = DateTime.parse(finishDateTime);
+  var format = DateFormat("yyyy年MM月dd日 HH:mm");
+  var dateTime = format.format(endTime);
+  return dateTime;
 }
