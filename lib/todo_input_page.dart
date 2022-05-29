@@ -212,6 +212,9 @@ class _TodoInputPageState extends State<TodoInputPage> {
                 ),
               ],
             ),
+            const SizedBox(
+              height: 13,
+            ),
             // 作成日時のテキストラベル
             Visibility(
               visible: !_isCreateTodo,
