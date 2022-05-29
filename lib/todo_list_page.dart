@@ -148,14 +148,19 @@ class _TodoListPageState extends State<TodoListPage> {
                             ),
                             // プログレスバー
                             SizedBox(
-                                child: LinearProgressIndicator(
-                              minHeight: 22.0,
-                              backgroundColor: Colors.grey,
-                              valueColor: const AlwaysStoppedAnimation<Color>(
-                                  Colors.lightBlueAccent),
-                              value: double.parse(deadLineCalc(
-                                  item.createDate, item.finishDateTime)),
-                            )),
+                              child: ClipRRect(
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(8)),
+                                  child: LinearProgressIndicator(
+                                    minHeight: 22.0,
+                                    backgroundColor: Colors.grey,
+                                    valueColor:
+                                        const AlwaysStoppedAnimation<Color>(
+                                            Colors.lightBlueAccent),
+                                    value: double.parse(deadLineCalc(
+                                        item.createDate, item.finishDateTime)),
+                                  )),
+                            ),
                             // 進捗率の文字
                             Align(
                                 alignment: Alignment.bottomCenter,
