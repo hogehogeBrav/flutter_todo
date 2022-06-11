@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -161,16 +163,16 @@ class _TodoListPageState extends State<TodoListPage> {
                                     valueColor:
                                         const AlwaysStoppedAnimation<Color>(
                                             Colors.lightBlueAccent),
-                                    value: double.parse(deadLineCalc(
-                                        item.createDate, item.finishDateTime)),
+                                    value: deadLineCalc(
+                                        item.createDate, item.finishDateTime),
                                   )),
                             ),
                             // 進捗率の文字
                             Align(
                                 alignment: Alignment.bottomCenter,
                                 child: Text(
-                                  progressMsg(double.parse(deadLineCalc(
-                                      item.createDate, item.finishDateTime))),
+                                  progressMsg(deadLineCalc(
+                                      item.createDate, item.finishDateTime)),
                                   style: const TextStyle(shadows: <Shadow>[
                                     Shadow(blurRadius: 1.5)
                                   ], fontSize: 15, color: Colors.white),
@@ -209,9 +211,9 @@ String getDateTime() {
   return dateTime;
 }
 
-String deadLineCalc(String createDate, String finishDateTime) {
+double deadLineCalc(String createDate, String finishDateTime) {
   if (createDate == finishDateTime) {
-    return 0.toString();
+    return 0.0;
   }
   var nowTime = DateTime.now();
   var startTime = DateTime.parse(createDate);
@@ -223,7 +225,7 @@ String deadLineCalc(String createDate, String finishDateTime) {
   if (result >= 1.0) {
     result = 1.0;
   }
-  return result.toString();
+  return result;
 }
 
 /// プログレスバーテキスト
