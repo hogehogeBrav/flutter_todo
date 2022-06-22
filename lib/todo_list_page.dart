@@ -15,7 +15,7 @@ import 'todo.dart';
 /// ・Todoリスト画面の状態を生成する
 class TodoListPage extends StatefulWidget {
   /// コンストラクタ
-  const TodoListPage({Key? key}) : super(key: key);
+  const TodoListPage({Key key}) : super(key: key);
 
   /// Todoリスト画面の状態を生成する
   @override
@@ -33,7 +33,7 @@ class _TodoListPageState extends State<TodoListPage> {
   final TodoListStore _store = TodoListStore();
 
   /// Todoリスト入力画面に遷移する
-  void _pushTodoInputPage([Todo? todo]) async {
+  void _pushTodoInputPage([Todo todo]) async {
     await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) {
@@ -96,7 +96,7 @@ class _TodoListPageState extends State<TodoListPage> {
                         _pushTodoInputPage(item);
                       },
                       backgroundColor: Colors.blueAccent,
-                      icon: Icons.edit_note_rounded,
+                      icon: Icons.edit,
                       label: '編集',
                     ),
                   ],
@@ -182,9 +182,9 @@ class _TodoListPageState extends State<TodoListPage> {
                       trailing: Checkbox(
                         // チェックボックスの状態
                         value: item.done,
-                        onChanged: (bool? value) {
+                        onChanged: (bool value) {
                           // Todo(完了か)を更新し、画面を更新する
-                          setState(() => _store.update(item, value!));
+                          setState(() => _store.update(item, value));
                         },
                       ),
                     ),
