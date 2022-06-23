@@ -96,7 +96,7 @@ class _TodoListPageState extends State<TodoListPage> {
                         _pushTodoInputPage(item);
                       },
                       backgroundColor: Colors.blueAccent,
-                      icon: Icons.edit_note_rounded,
+                      icon: Icons.edit,
                       label: '編集',
                     ),
                   ],

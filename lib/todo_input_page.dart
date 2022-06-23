@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
-import 'package:todo_test/todo_list_page.dart';
 import 'todo_list_store.dart';
 import 'todo.dart';
 
 /// Todo入力画面のクラス
-///
+
 /// 以下の責務を持つ
 /// ・Todo入力画面の状態を生成する
 class TodoInputPage extends StatefulWidget {
