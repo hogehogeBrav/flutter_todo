@@ -12,11 +12,11 @@ import 'todo.dart';
 /// ・Todo入力画面の状態を生成する
 class TodoInputPage extends StatefulWidget {
   /// Todoのモデル
-  final Todo todo;
+  final Todo? todo;
 
   /// コンストラクタ
   /// Todoを引数で受け取った場合は更新、受け取らない場合は追加画面となる
-  const TodoInputPage({Key key, this.todo}) : super(key: key);
+  const TodoInputPage({Key? key, this.todo}) : super(key: key);
 
   /// Todo入力画面の状態を生成する
   @override
@@ -33,25 +33,25 @@ class _TodoInputPageState extends State<TodoInputPage> {
   final TodoListStore _store = TodoListStore();
 
   /// 新規追加か
-  bool _isCreateTodo;
+  late bool _isCreateTodo;
 
   /// 画面項目：タイトル
-  String _title;
+  late String _title;
 
   /// 画面項目：詳細
-  String _detail;
+  late String _detail;
 
   /// 画面項目：終了日時
-  String _finishDateTime;
+  late String _finishDateTime;
 
   /// 画面項目：完了か
-  bool _done;
+  late bool _done;
 
   /// 画面項目：作成日時
-  String _createDate;
+  late String _createDate;
 
   /// 画面項目：更新日時
-  String _updateDate;
+  late String _updateDate;
 
   /// 初期処理を行う
   @override
@@ -197,7 +197,7 @@ class _TodoInputPageState extends State<TodoInputPage> {
                           _store.add(_done, _title, _detail, _finishDateTime);
                         } else {
                           // Todoを更新する
-                          _store.update(widget.todo, _done, _title, _detail,
+                          _store.update(widget.todo!, _done, _title, _detail,
                               _finishDateTime);
                         }
                         // Todoリスト画面に戻る

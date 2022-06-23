@@ -12,7 +12,7 @@ void main() {
 /// ・Todoリスト画面を生成する
 class TodoListApp extends StatelessWidget {
   /// コンストラクタ
-  const TodoListApp({Key key}) : super(key: key);
+  const TodoListApp({Key? key}) : super(key: key);
 
   /// 画面を作成する
   @override

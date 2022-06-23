@@ -57,7 +57,7 @@ class TodoListStore {
 
   /// Todoを更新する
   void update(Todo todo, bool done,
-      [String title, String detail, String finishDateTime]) {
+      [String? title, String? detail, String? finishDateTime]) {
     todo.done = done;
     if (title != null) {
       todo.title = title;

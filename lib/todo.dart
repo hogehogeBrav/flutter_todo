@@ -4,25 +4,25 @@
 /// ・Todoのプロパティを持つ
 class Todo {
   /// ID
-  int id;
+  late int id;
 
   /// タイトル
-  String title;
+  late String title;
 
   /// 詳細
-  String detail;
+  late String detail;
 
   /// 納期
-  String finishDateTime;
+  late String finishDateTime;
 
   /// 完了か
-  bool done;
+  late bool done;
 
   /// 作成日時
-  String createDate;
+  late String createDate;
 
   /// 更新日時
-  String updateDate;
+  late String updateDate;
 
   /// コンストラクタ
   Todo(
